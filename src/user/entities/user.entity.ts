@@ -1,3 +1,5 @@
+import { ApiHideProperty } from '@nestjs/swagger';
+import { Exclude } from 'class-transformer';
 import {
   Column,
   CreateDateColumn,
@@ -6,7 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity({ name: 'users' })
+@Entity({ name: 'user' })
 export class User {
   @PrimaryGeneratedColumn({ name: 'id', unsigned: true })
   id: number;
@@ -17,9 +19,15 @@ export class User {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
-  @Column({ name: 'name', nullable: false })
+  @Column({ name: 'name', nullable: false, unique: true })
   name: string;
 
   @Column({ name: 'hashed_password', nullable: false })
+  @Exclude()
+  @ApiHideProperty()
   hashedPassword: string;
+
+  constructor(partial: Partial<User>) {
+    Object.assign(this, partial);
+  }
 }
