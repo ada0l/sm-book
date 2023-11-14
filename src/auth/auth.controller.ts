@@ -1,11 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  HttpCode,
-  HttpStatus,
-  Post,
-} from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { ApiUnauthorizedResponse } from '@nestjs/swagger';
@@ -14,9 +7,11 @@ import { ApiUnauthorizedResponse } from '@nestjs/swagger';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @HttpCode(HttpStatus.OK)
   @Post('login')
-  @ApiUnauthorizedResponse({ description: 'Unauthorized' })
+  @HttpCode(HttpStatus.OK)
+  @ApiUnauthorizedResponse({
+    description: 'User does not exist or Passwords are not matched',
+  })
   signIn(@Body() signInDto: CreateUserDto) {
     return this.authService.signIn(signInDto.name, signInDto.password);
   }
