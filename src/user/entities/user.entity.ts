@@ -1,9 +1,13 @@
 import { ApiHideProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
+import { Book } from 'src/book/entities/book.entity';
+import { Borrowing } from 'src/borrowing/entities/borrowing.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -26,6 +30,9 @@ export class User {
   @Exclude()
   @ApiHideProperty()
   hashedPassword: string;
+
+  @Column({ name: 'is_admin', nullable: false, default: false })
+  isAdmin: boolean;
 
   constructor(partial: Partial<User>) {
     Object.assign(this, partial);
