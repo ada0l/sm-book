@@ -5,6 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { UserController } from './user/user.controller';
+import { BookModule } from './book/book.module';
+import { BorrowingModule } from './borrowing/borrowing.module';
 
 require('dotenv').config();
 
@@ -23,6 +25,8 @@ require('dotenv').config();
     }),
     AuthModule,
     UserModule,
+    BookModule,
+    BorrowingModule,
   ],
   controllers: [AppController, UserController],
   providers: [AppService],
